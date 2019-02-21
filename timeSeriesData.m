@@ -2,6 +2,7 @@ function [yr,mo,dy,hr,mi,se,data] = timeSeriesData(timeData,timeStep,t1,t2,preda
 %% This script reads time series data input and extract the period of interest and fill the date and data gaps
 % [timeData]: timeInput in the format of matlab datetime
 % [timeStep]: time steps of desired time series e.g. hours(1)-->every 1 hr
+%   help doc: https://se.mathworks.com/help/matlab/matlab_prog/generate-sequence-of-dates-and-time.html
 % [t1 t2]: the start and end study time; in the format of matlab datetime
 % [predata]: the original input of data
 % the date output is in the order of year, month, day, hour, minute, second
