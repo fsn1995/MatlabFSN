@@ -7,10 +7,11 @@ function [yr,mo,dy,hr,mi,se,data] = timeSeriesData(timeData,timeStep,t1,t2,preda
 % [predata]: the original input of data
 % the date output is in the order of year, month, day, hour, minute, second
 % [data] is the output of date and data gaps filled results
+% It will plot the original time series data and gaps filled data for visual comparison
 % example:
 % [yr,mo,dy,hr,mi,se,temp] = timeSeriesData(time,hours(1),t1,t2,temp);
 % INTERPOLATION METHOD CAN BE CHANGED: see help fillmissing
-
+%
 % Shunan Feng: fsn.1995@gmail.com
 % written for thesis work in Uppsala University, 20190220
 
@@ -32,13 +33,23 @@ if length(timeData) ~= length(time)
     nullNum = sum(index == 0);
     fprintf('%d date gaps found \n',nullNum);
     disp(time(index == 0));
-    data(index == 1) = predata(dataStart:1:dataEnd);
-    nullNum = sum(isnan(data));
+    data(index == 1) = predata(dataStart:dataEnd);
+    figure;
+    plot(time,data,'DisplayName','Unfilled'); hold on
+    nullIndex = isnan(data);
+    nullNum = sum(nullIndex);
     fprintf('%d data gaps found \n',nullNum);
-    disp(time(isnan(data)));
+    disp(time(nullIndex));
     data = fillmissing(data,'linear');
+    plot(time(nullIndex),data(nullIndex),'*','DisplayName','filled');
+    legend
 else
+    nullIndex = isnan(predata);
     data = fillmissing(predata,'linear');
+    figure;
+    plot(time,predata,'DisplayName','Unfilled'); hold on
+    plot(time(nullIndex),predata(nullIndex),'*','DisplayName','filled');
+    legend
 end
 [yr,mo,dy] = ymd(time);
 [hr,mi,se] = hms(time);
