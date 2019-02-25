@@ -3,7 +3,7 @@ function [lon,lat] = SWEREF2WGS84(projection,x,y)
 % [projection]: supported projection parameters can be found in the switch
 % case list in script. If your projection is not found then it will use the
 % default setting.
-% [x,y]: the input of coordinates (E,N) e.g. 7536381,651026	
+% [x,y]: the input of coordinates (N,E) e.g. 7536381,651026	
 % e.g. [lon,lat] = SWEREF90_2_WGS84('sweref_99_tm',x,y)
 % [lon,lat]: the output of coordinates in longitude and latitude
 % reference source: http://www.lantmateriet.se/geodesi/
@@ -143,6 +143,7 @@ switch projection
 end
 
 fprintf('ContertED from %s\n',projection);
+
 e2 = proj.flattening * (2.0 - proj.flattening);
 n = proj.flattening / (2.0 - proj.flattening);
 a_roof = proj.axis / (1.0 + n) * (1.0 + n*n/4.0 + n*n*n*n/64.0);
@@ -155,8 +156,10 @@ Bstar = -(7.0*e2*e2 + 17.0*e2*e2*e2 + 30.0*e2*e2*e2*e2) / 6.0;
 Cstar = (224.0*e2*e2*e2 + 889.0*e2*e2*e2*e2) / 120.0;
 Dstar = -(4279.0*e2*e2*e2*e2) / 1260.0;
 lambda_zero = deg2rad(proj.central_meridian);
+
 xi = (x - proj.false_northing) ./ (proj.scale * a_roof);
 eta = (y - proj.false_easting) ./ (proj.scale * a_roof);
+
 xi_prim = xi - delta1*sin(2.0*xi) .* cosh(2.0*eta) - ...
     delta2*sin(4.0*xi) .* cosh(4.0*eta) - ...
     delta3*sin(6.0*xi) .* cosh(6.0*eta) - ...
@@ -167,6 +170,7 @@ eta_prim = eta -delta1*sin(2.0*xi) .* cosh(2.0*eta) - ...
     delta4*sin(8.0*xi) .* cosh(8.0*eta);
 phi_star = asin(sin(xi_prim) ./ cosh(eta_prim));
 delta_lambda = atan(sinh(eta_prim) ./ cos(xi_prim));
+
 lon_radian = lambda_zero + delta_lambda;
 lat_radian = phi_star + sin(phi_star) .* cos(phi_star) .* ...
     (Astar +...
