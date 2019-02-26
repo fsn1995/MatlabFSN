@@ -1,5 +1,5 @@
 function [lat,lon] = SWEREF2WGS84(projection,x,y)
-%% SWEREF90_2_WGS84 converts the Swedish coordinate (RT90, SWEREF90) to WGS84
+%% SWEREF2WGS84 converts the Swedish coordinate (RT90, SWEREF90) to WGS84
 % [projection]: supported projection parameters can be found in the switch
 % case list in script. If your projection is not found then it will use the
 % default setting.
