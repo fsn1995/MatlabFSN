@@ -1,4 +1,4 @@
-function [yr,mo,dy,hr,mi,se,data] = timeSeriesData(timeData,timeStep,t1,t2,predata)
+function [yr,mo,dy,hr,mi,se,data,gaps] = timeSeriesData(timeData,timeStep,t1,t2,predata)
 %% This script reads time series data input and extract the period of interest and fill the date and data gaps
 % [timeData]: timeInput in the format of matlab datetime
 % [timeStep]: time steps of desired time series e.g. hours(1)-->every 1 hr
@@ -7,6 +7,7 @@ function [yr,mo,dy,hr,mi,se,data] = timeSeriesData(timeData,timeStep,t1,t2,preda
 % [predata]: the original input of data
 % the date output is in the order of year, month, day, hour, minute, second
 % [data] is the output of date and data gaps filled results
+% [gaps]: the time where gaps detected
 % It will plot the original time series data and gaps filled data for visual comparison
 % example:
 % [yr,mo,dy,hr,mi,se,temp] = timeSeriesData(time,hours(1),t1,t2,temp);
@@ -51,6 +52,7 @@ else
     plot(time(nullIndex),predata(nullIndex),'*','DisplayName','filled');
     legend
 end
+gaps = time(nullIndex);
 [yr,mo,dy] = ymd(time);
 [hr,mi,se] = hms(time);
 end
