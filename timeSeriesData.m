@@ -13,8 +13,8 @@ function [yr,mo,dy,hr,mi,se,data,index] = timeSeriesData(timeData,timeStep,t1,t2
 % alternatively you can replace it in the script with fillmissing function,
 % see help fillgaps/fillmissing
 %
-% note: if error says the size of array do not match, round the dateData
-% e.g. timeData = dateshift(timeData,'start','hour');
+% note: if error says the size of array do not match, round the dateData if irregular dateData
+% e.g. timeData = dateshift(timeData,'start','hour'); this is to round e.g. 16:07 to 16:00
 %
 % Shunan Feng: fsn.1995@gmail.com
 % written for thesis work in Uppsala University, 20190220
