@@ -10,7 +10,7 @@ function [yr,mo,dy,hr,mi,se,data,index] = timeSeriesData(timeData,timeStep,t1,t2
 % [index]: 0 for original 1 for gaps filled data
 % It will plot the original time series data and gaps filled data for visual comparison
 % INTERPOLATION METHOD CAN BE CHANGED: default method is fillgaps function ,
-% alternatively you can replace them in the script with fillmissing function,
+% alternatively you can replace it in the script with fillmissing function,
 % see help fillgaps/fillmissing
 %
 % note: if error says the size of array do not match, round the dateData
@@ -61,7 +61,7 @@ if length(timeData) ~= length(time)
     plot(time(nullIndex),data(nullIndex),'*','DisplayName','filled');
     legend
 else
-    fprintf('Time seri-es is complete without date gaps\n');
+    fprintf('Time series is complete without date gaps\n');
     nullIndex = isnan(predata);
     nullNum = sum(nullIndex);
     fprintf('%d data gaps found \n',nullNum);
